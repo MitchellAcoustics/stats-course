@@ -1,6 +1,8 @@
 ---
 title: "Experiments"
 format: stat20slides-revealjs
+execute: 
+  cache: false
 ---
 
 ## Agenda
@@ -82,9 +84,8 @@ and which is response, whether we use both or not.
 
 ## The Essential Question of Our Time
 
-```{r echo = FALSE, fig.align='center'}
-knitr::include_graphics("images/la-croix.png")
-```
+![](images/la-croix.png)
+
 
 ::: poll
 Which is the best flavor?
@@ -112,9 +113,7 @@ countdown::countdown(60)
 
 ##
 
-```{r echo = FALSE, fig.align='center'}
-knitr::include_graphics("images/la-croix.png")
-```
+![](images/la-croix.png)
 
 ::: poll
 Could your taster distinguish between flavors?

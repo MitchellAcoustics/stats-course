@@ -1,32 +1,33 @@
 project:
   type: website
-  
+  execute-dir: project
+
 metadata-files:
   - "scheduled-docs_files/draft-list.yml"
   - "scheduled-docs_files/sidebar-contents.yml"
 
 # Website Configuration and Layout
 website:
-  title: "Stat 20"
-  description: "Introduction to Probability and Statistics at UC Berkeley"
-  google-analytics: G-WP7F4QKDC8
+  title: "Data Analytics for Sustainable Construction"
+  description: "Shared resources for data analytics courses at The UCL Bartlett School of Sustainable Construction"
+  # google-analytics: G-WP7F4QKDC8
   search:
     location: navbar
     type: overlay
-  site-url: "https://stat20.berkeley.edu/fall-2024"
-  repo-url: "https://github.com/berkeley-stat20/fall-2024"
+  site-url: "https://drandrewmitchell.com/BSSCDataAnalytics/"
+  repo-url: "https://github.com/mitchellacoustics/BSSCDataAnalytics"
   favicon: assets/favicon.ico
-  image: assets/stat20-hex.png
+  # image: assets/stat20-hex.png
   open-graph:
-    site-name: "Stat 20"
-    image: assets/stat20-hex.png
-  twitter-card: true
+    site-name: "BSSC Data Analytics"
+  #   image: assets/stat20-hex.png
+  # twitter-card: true
   page-navigation: true
   reader-mode: true
   navbar:
     title: false
-    logo: assets/stat20-hex-small.png
-    logo-alt: "Stat 20 logo"
+    # logo: assets/stat20-hex-small.png
+    # logo-alt: "Stat 20 logo"
     background: white
     foreground: "gray-800"
     collapse-below: sm
@@ -39,17 +40,17 @@ website:
         href: notes.qmd
       - text: Assignments
         href: assignments.qmd
-    tools:
-      - icon: chat-fill
-        href: https://edstem.org/us/courses/51198
-        aria-label: Ed Discussion Forum
-      - icon: bar-chart-fill
-        href: https://www.gradescope.com/courses/693050
-        aria-label: Gradescope
-      - icon: r-circle-fill
-        href: https://stat20.datahub.berkeley.edu/
-        aria-label: RStudio
-  page-footer: 
+    # tools:
+    #   - icon: chat-fill
+    #     href: https://edstem.org/us/courses/51198
+    #     aria-label: Ed Discussion Forum
+    #   - icon: bar-chart-fill
+    #     href: https://www.gradescope.com/courses/693050
+    #     aria-label: Gradescope
+    #   - icon: r-circle-fill
+    #     href: https://stat20.datahub.berkeley.edu/
+    #     aria-label: RStudio
+  page-footer:
     background: white
     foreground: "gray-800"
     border: false
@@ -75,7 +76,7 @@ format:
 
 # General Metadata
 execute:
-  freeze: false
+  freeze: auto
   message: false
   warning: false
   fig-align: center

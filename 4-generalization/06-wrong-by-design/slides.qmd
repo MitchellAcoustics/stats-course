@@ -47,11 +47,12 @@ What is the p-value of this test?
 ```{r}
 countdown::countdown(1)
 ```
+
 -->
 
 ## 
 
-![](images/ppk-as-ht.png)
+![](4-generalization/06-wrong-by-design/images/ppk-as-ht.png)
 
 :::poll
 Instead of constructing a confidence interval to learn about the parameter, we could assert the value of a parameter and see whether it is consistent with the data using a hypothesis test. Say you are interested in testing whether there is a clear majority opinion of support or opposition to the project.
@@ -83,9 +84,10 @@ library(infer)
 library(stat20data)
 
 ppk <- ppk |>
-  mutate(support_before = Q18_words %in% c("Somewhat support", 
-                                          "Strongly support",
-                                          "Very strongly support"))
+  mutate(
+    support_before = Q18_words %in%
+      c("Somewhat support", "Strongly support", "Very strongly support")
+  )
 ```
 
 ## {auto-animate="true"}
@@ -97,12 +99,12 @@ library(infer)
 library(stat20data)
 
 ppk <- ppk |>
-  mutate(support_before = Q18_words %in% c("Somewhat support", 
-                                          "Strongly support",
-                                          "Very strongly support"))
+  mutate(
+    support_before = Q18_words %in%
+      c("Somewhat support", "Strongly support", "Very strongly support")
+  )
 obs_stat <- ppk |>
-  specify(response = support_before,
-          success = "TRUE") |>
+  specify(response = support_before, success = "TRUE") |>
   calculate(stat = "prop")
 ```
 
@@ -115,12 +117,12 @@ library(infer)
 library(stat20data)
 
 ppk <- ppk |>
-  mutate(support_before = Q18_words %in% c("Somewhat support", 
-                                          "Strongly support",
-                                          "Very strongly support"))
+  mutate(
+    support_before = Q18_words %in%
+      c("Somewhat support", "Strongly support", "Very strongly support")
+  )
 obs_stat <- ppk |>
-  specify(response = support_before,
-          success = "TRUE") |>
+  specify(response = support_before, success = "TRUE") |>
   calculate(stat = "prop")
 obs_stat
 ```
@@ -130,8 +132,7 @@ obs_stat
 ```{r}
 #| echo: true
 null <- ppk |>
-  specify(response = support_before,
-          success = "TRUE") |>
+  specify(response = support_before, success = "TRUE") |>
   hypothesize(null = "point", p = .5) |>
   generate(reps = 500, type = "draw") |>
   calculate(stat = "prop")
@@ -142,8 +143,7 @@ null <- ppk |>
 ```{r}
 #| echo: true
 null <- ppk |>
-  specify(response = support_before,
-          success = "TRUE") |>
+  specify(response = support_before, success = "TRUE") |>
   hypothesize(null = "point", p = .5) |>
   generate(reps = 500, type = "draw") |>
   calculate(stat = "prop")
@@ -157,8 +157,7 @@ null
 #| eval: false
 #| fig-align: center
 null <- ppk |>
-  specify(response = support_before,
-          success = "TRUE") |>
+  specify(response = support_before, success = "TRUE") |>
   hypothesize(null = "point", p = .5) |>
   generate(reps = 500, type = "draw") |>
   calculate(stat = "prop")
@@ -170,8 +169,7 @@ visualize(null) +
 #| echo: false
 #| fig-align: center
 null <- ppk |>
-  specify(response = support_before,
-          success = "TRUE") |>
+  specify(response = support_before, success = "TRUE") |>
   hypothesize(null = "point", p = .5) |>
   generate(reps = 500, type = "draw") |>
   calculate(stat = "prop")
@@ -289,13 +287,17 @@ Select a test statistic that bears on the null hypothesis.
 Construct the appropriate null distribution.
 
 ```{r, echo=FALSE, eval=TRUE, fig.height = 3.5, fig.width = 10, fig.align='center'}
-x1  <- 0:75
+x1 <- 0:75
 df <- data.frame(x = x1, y = dbinom(x1, 75, 0.5))
 library(tidyverse)
 ggplot(df, aes(x = x, y = y)) +
   geom_bar(stat = "identity", col = "darkgreen", fill = "white") +
-  stat_function(fun = dnorm, args = list(mean = 75/2, sd = sqrt(74/4)), 
-                col = "goldenrod", lwd = 1.2)
+  stat_function(
+    fun = dnorm,
+    args = list(mean = 75 / 2, sd = sqrt(74 / 4)),
+    col = "goldenrod",
+    lwd = 1.2
+  )
 ```
 
 1. Permutation (when `null = "independence"`)
@@ -342,9 +344,13 @@ Calculate a measure of consistency between the observed test statistic (the data
 
 :::: columns
 ::: {.column width="50%"}
+
 ```{r, out.width="100%", fig.align='center'}
-knitr::include_graphics("images/covid-barchart.png")
+knitr::include_graphics(
+  "4-generalization/06-wrong-by-design/images/covid-barchart.png"
+)
 ```
+
 :::
 
 ::: {.column width="50%"}
@@ -356,7 +362,9 @@ What geometries are in use in this graphic?
 ## {.smaller}
 
 ```{r, out.width="100%", fig.align='center'}
-knitr::include_graphics("images/covid-positivity.png")
+knitr::include_graphics(
+  "4-generalization/06-wrong-by-design/images/covid-positivity.png"
+)
 ```
 
 **A simplified model**
@@ -392,7 +400,9 @@ The incidence of COVID at Cal is at an elevated level.
 ## Decision Errors
 
 ```{r, out.width="100%", fig.align='center'}
-knitr::include_graphics("images/decision-errors-table.jpg")
+knitr::include_graphics(
+  "4-generalization/06-wrong-by-design/images/decision-errors-table.jpg"
+)
 ```
 
 :::notes
@@ -419,7 +429,7 @@ What would we have to do to this graphic to increase the area under the curve th
 ## Decision Errors Rates
 
 ```{r, out.width="100%", fig.align='center'}
-knitr::include_graphics("images/decision-error-rates.jpg")
+knitr::include_graphics("4-generalization/06-wrong-by-design/images/decision-error-rates.jpg")
 ```
 
 
@@ -462,9 +472,11 @@ $$ P(\textrm{reject } H_0 | H_0 \textrm{ is false}) $$
 :::
 
 ::: {.column width="50%"}
+
 ```{r, out.width="70%"}
-knitr::include_graphics("images/PeopleBirding.jpeg")
+knitr::include_graphics("4-generalization/06-wrong-by-design/images/PeopleBirding.jpeg")
 ```
+
 :::
 ::::
 
@@ -488,3 +500,4 @@ This is an example of how low-power studies resulted in a failure to detect that
 [Learn why we don't accept the null hypothesis.]{.bigadage}
 
 -->
+ 

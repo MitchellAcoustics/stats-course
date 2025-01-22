@@ -126,13 +126,13 @@ Each of these four lines of code is called a **command** and the response from R
 Although it is easiest to read code when the numbers are separated from the operator by a single space, it's not necessary. R ignores all spaces when it runs your code, so each of the following also work.
 
 ```{r}
-1/2
-1   /         2
+1 / 2
+1 / 2
 ```
 
 You can add exponents by using `^`, but don't forget about the order of operations. If you want an alternative ordering, use parentheses.
 
 ```{r}
-2 ^ 3 + 1
-2 ^ (3 + 1)
+2^3 + 1
+2^(3 + 1)
 ```

@@ -1,6 +1,8 @@
 ---
 title: "A Grammar of Graphics"
 format: stat20slides-revealjs
+execute:
+  cache: false
 ---
 
 ## Agenda
@@ -10,6 +12,7 @@ format: stat20slides-revealjs
 #| message: false
 library(stat20data)
 library(tidyverse)
+library(kableExtra)
 ```
 
 - Announcements
@@ -50,14 +53,14 @@ library(tidyverse)
 penguins |>
   filter(species == "Gentoo") |>
   mutate(is_male = (sex == "male")) |>
-  ggplot(mapping = 
-           aes(x = body_mass_g,
-               y = is_male)) +
+  ggplot(mapping = aes(x = body_mass_g, y = is_male)) +
   geom_boxplot() +
-  labs(x = "Body Mass (in grams)",
-      y =  "Male Penguin?",
-      title = "Male Gentoo penguins have larger body masses")
-  
+  labs(
+    x = "Body Mass (in grams)",
+    y = "Male Penguin?",
+    title = "Male Gentoo penguins have larger body masses"
+  )
+
 ```
 
 . . .
@@ -84,10 +87,9 @@ Answer at `pollev.com`
 library(tidyverse)
 library(palmerpenguins)
 
-ggplot(penguins, aes(x = bill_length_mm,
-                     fill = species)) +
-    geom_density() +
-    theme_gray(base_size = 20)
+ggplot(penguins, aes(x = bill_length_mm, fill = species)) +
+  geom_density() +
+  theme_gray(base_size = 20)
 ```
 
 ```{r}
@@ -105,18 +107,20 @@ What has changed when moving from the left to the right?
 #| fig-align: center
 #| fig-width: 11
 library(patchwork)
-p1 <- ggplot(penguins, aes(x = bill_length_mm,
-                           y = bill_depth_mm,
-                           color = species)) +
-    geom_point(size=2) +
-    theme_gray(base_size = 20) +
-    theme(legend.position = "none")
-p2 <- ggplot(penguins, aes(x = bill_length_mm,
-                           y = bill_depth_mm,
-                           shape = species)) +
-    geom_point(size=2) +
-    theme_gray(base_size = 20) +
-    theme(legend.position = "none")
+p1 <- ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, color = species)
+) +
+  geom_point(size = 2) +
+  theme_gray(base_size = 20) +
+  theme(legend.position = "none")
+p2 <- ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, shape = species)
+) +
+  geom_point(size = 2) +
+  theme_gray(base_size = 20) +
+  theme(legend.position = "none")
 p1 + p2
 ```
 
@@ -240,9 +244,7 @@ gapminder %>%
 
 ## What type of claim was made?
 
-```{r}
-knitr::include_graphics("images/poll.png")
-```
+![](images/poll.png)
 
 . . . 
 
@@ -252,9 +254,7 @@ countdown::countdown(minutes = 1, top = 0)
 
 ## What type of variable is listeners?
 
-```{r}
-knitr::include_graphics("images/spotify.png")
-```
+![](images/spotify.png)
 
 . . . 
 
@@ -265,9 +265,7 @@ countdown::countdown(minutes = 1, top = 0)
 
 ## What type of proportion is used?
 
-```{r}
-knitr::include_graphics("images/q1.png")
-```
+![](images/q1.png)
 
 . . . 
 
@@ -285,18 +283,14 @@ countdown::countdown(minutes = 1, top = 0)
 library(patchwork)
 
 p1 <- penguins |>
-  filter(species == "Gentoo",
-         sex == "male") |>
+  filter(species == "Gentoo", sex == "male") |>
   ggplot(mapping = aes(x = body_mass_g)) +
-  geom_histogram(color = "white",
-                 bins = 10) +
+  geom_histogram(color = "white", bins = 10) +
   labs(title = "Image 1")
 
-
 p2 <- class_survey |>
-  filter(new_COVID_variant >0,
-         new_COVID_variant < 1) |>
-  ggplot(mapping = aes(x = new_COVID_variant)) +
+  filter(covid > 0, covid < 1) |>
+  ggplot(mapping = aes(x = covid)) +
   geom_histogram(color = "white", bins = 10) +
   labs(title = "Image 2")
 
@@ -316,10 +310,9 @@ countdown::countdown(minutes = 1, top = 0)
 library(tidyverse)
 library(palmerpenguins)
 
-ggplot(penguins, aes(x = bill_length_mm,
-                     fill = species)) +
-    geom_density() +
-    theme_gray(base_size = 20)
+ggplot(penguins, aes(x = bill_length_mm, fill = species)) +
+  geom_density() +
+  theme_gray(base_size = 20)
 ```
 
 . . . 
@@ -334,25 +327,24 @@ countdown::countdown(1, top = 1)
 #| fig-align: center
 #| fig-width: 11
 library(patchwork)
-p1 <- ggplot(penguins, aes(x = bill_length_mm,
-                           y = bill_depth_mm,
-                           color = species)) +
-    geom_point(size=2) +
-    theme_gray(base_size = 20) +
-    theme(legend.position = "none") 
-p2 <- ggplot(penguins, aes(x = bill_length_mm,
-                           y = bill_depth_mm,
-                           shape = species)) +
-    geom_point(size=5, alpha = .5) +
-    theme_bw(base_size = 20) +
-    lims(y = c(10,24)) +
-    theme(legend.position = "none") +
-    xlab("Bill Length (in millimeters)") +
-    annotate(geom = "text", x = 45, y = 11,
-             label = "Gentoo", size = 5) +
-    annotate(geom = "segment", x = 45, y = 11.2,
-             xend = 45, yend = 13, 
-             size = 1)
+p1 <- ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, color = species)
+) +
+  geom_point(size = 2) +
+  theme_gray(base_size = 20) +
+  theme(legend.position = "none")
+p2 <- ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm, shape = species)
+) +
+  geom_point(size = 5, alpha = .5) +
+  theme_bw(base_size = 20) +
+  lims(y = c(10, 24)) +
+  theme(legend.position = "none") +
+  xlab("Bill Length (in millimeters)") +
+  annotate(geom = "text", x = 45, y = 11, label = "Gentoo", size = 5) +
+  annotate(geom = "segment", x = 45, y = 11.2, xend = 45, yend = 13, size = 1)
 p1 + p2
 ```
 
