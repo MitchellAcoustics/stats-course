@@ -49,3 +49,4 @@ homepage-readings/
 # docker-compose run-time environment
 .env
 docker-compose.override.yml
+*_cache/

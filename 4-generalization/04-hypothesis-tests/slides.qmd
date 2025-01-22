@@ -7,11 +7,11 @@ execute:
 
 ## Agenda
 
-- Announcements
-- Concept Questions
-- Problem Set 13: Hypothesis Tests? (first page)
-- *Break*
-- Problem Set 13: Hypothesis Tests? (second page)
+-   Announcements
+-   Concept Questions
+-   Problem Set 13: Hypothesis Tests? (first page)
+-   *Break*
+-   Problem Set 13: Hypothesis Tests? (second page)
 
 <!---
 :::notes
@@ -32,10 +32,9 @@ Walk through how students started with a previous notion that the deck was fair 
 
 # Concept Questions
 
-## {.smaller}
+##  {.smaller}
 
-:::poll
-
+::: poll
 Which of the following statements below represents claims that correspond to a null hypothesis (as opposed to an alternative hypothesis)?
 
 Hint: try to write them using parameters (statements about means / proportions / etc)
@@ -58,8 +57,7 @@ F. The probability of getting in a car accident is the same if using a cell phon
 countdown::countdown(1, bottom = 0)
 ```
 
-
-:::notes
+::: notes
 Correct answers: A, D, F.
 
 Most of these they haven't seen examples of, so it will be worth laying out the null hypotheses.
@@ -76,7 +74,7 @@ We want to understand whether blood thinners are helpful or harmful. We’ll con
 *Alternative*: Blood thinners have an impact on survival, either positive or negative, but not zero.
 :::
 
-![](images/two-sided.png){fig-width="400" fig-align="center"}
+![](4-generalization/04-hypothesis-tests/images/two-sided.png){fig-width="400" fig-align="center"}
 
 :::poll
 What is your guess at the p-value?
@@ -92,10 +90,9 @@ countdown::countdown(1, bottom = 0)
 :::
 -->
 
-##
+## 
 
-A pharmaceutical company developed a new treatment for eczema and performed a
-hypothesis test to see if it worked better than the company's old treatment. The P-value for the test was $10\%$. Which one of the following statements are true?
+A pharmaceutical company developed a new treatment for eczema and performed a hypothesis test to see if it worked better than the company's old treatment. The P-value for the test was $10\%$. Which one of the following statements are true?
 
 \
 
@@ -103,7 +100,7 @@ A. The probability that the null hypothesis is false is $10\%$.
 
 B. The P-value of about $10\%$ was computed assuming that the null hypothesis was true.
 
-C. The new drug is significantly better than the old. 
+C. The new drug is significantly better than the old.
 
 D. The alternative hypothesis is 10 times more likely the null.
 
@@ -116,7 +113,7 @@ countdown::countdown(1, bottom = 0)
 
 -   Today's problem set is all about answering one question:
 
-. . . 
+. . .
 
 > Is yawning contagious?
 
@@ -127,7 +124,6 @@ Answer at `pollev.com`.
 # Problem Set 13:
 
 -   Now, we will watch a short excerpt from a Mythbusters episode in which the Mythbusters crew sets up, performs and analyzes the results of an experiment designed to test whether yawning is contagious.
-
 
 ## What do you think about the of the experiment in the video?
 
@@ -152,7 +148,6 @@ countdown::countdown(20)
 countdown::countdown(5)
 ```
 
-
 # Problem Set 13: Page 2
 
 ```{r}
@@ -164,26 +159,25 @@ countdown::countdown(20)
 
 Answer at `pollev.com`.
 
-
-<!---
+<!-- 
 # Hypothesis Testing with `infer`
 
 
-## {background-image="images/pic-5.jpg" background-size="contain"}
+## {background-image="4-generalization/04-hypothesis-tests/images/pic-5.jpg" background-size="contain"}
 
-## {background-image="images/pic-6.jpg" background-size="contain"}
+## {background-image="4-generalization/04-hypothesis-tests/images/pic-6.jpg" background-size="contain"}
 
-## {background-image="images/pic-7.jpg" background-size="contain"}
+## {background-image="4-generalization/04-hypothesis-tests/images/pic-7.jpg" background-size="contain"}
 
-## {background-image="images/pic-8.jpg" background-size="contain"}
+## {background-image="4-generalization/04-hypothesis-tests/images/pic-8.jpg" background-size="contain"}
 
-## {background-image="images/pic-9.jpg" background-size="contain"}
+## {background-image="4-generalization/04-hypothesis-tests/images/pic-9.jpg" background-size="contain"}
 
-## {background-image="images/pic-10.jpg" background-size="contain"}
+## {background-image="4-generalization/04-hypothesis-tests/images/pic-10.jpg" background-size="contain"}
 
-## {background-image="images/pic-11.jpg" background-size="contain"}
+## {background-image="4-generalization/04-hypothesis-tests/images/pic-11.jpg" background-size="contain"}
 
-## {background-image="images/pic-12.jpg" background-size="contain"}
+## {background-image="4-generalization/04-hypothesis-tests/images/pic-12.jpg" background-size="contain"}
 
 # Appendix
 
@@ -208,8 +202,8 @@ Create new column with just two levels and drop NAs.
 
 ```{r}
 class_survey <- class_survey %>%
-  mutate(warm_fav = season%in% c("Summer", "Fall")) %>%
-  drop_na(beach_or_mtns, warm_fav)
+  mutate(warm_fav = season %in% c("Summer", "Fall")) %>%
+  drop_na(mts_beach, warm_fav)
 ```
 
 
@@ -221,18 +215,21 @@ class_survey <- class_survey %>%
 
 :::columns
 :::{.column width="50%"}
+
 ```{r}
 class_survey %>%
-  select(beach_or_mtns, warm_fav)
+  select(mts_beach, warm_fav)
 ```
+
 :::
 
 :::{.column width="50%" .fragment}
+
 ```{r, fig.height=4}
-ggplot(class_survey, aes(x = beach_or_mtns,
-                         fill = warm_fav)) +
+ggplot(class_survey, aes(x = mts_beach, fill = warm_fav)) +
   geom_bar(position = "fill")
 ```
+
 :::
 :::
 
@@ -246,9 +243,11 @@ ggplot(class_survey, aes(x = beach_or_mtns,
 ```{r}
 library(infer)
 obs_stat <- class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   calculate(stat = "diff in props")
 obs_stat
 ```
@@ -262,9 +261,7 @@ obs_stat
 
 ```{r}
 class_survey %>%
-  specify(response = warm_fav,  
-          explanatory = beach_or_mtns,  
-          success = "TRUE")  
+  specify(response = warm_fav, explanatory = mts_beach, success = "TRUE")
 ```
 
 
@@ -272,10 +269,12 @@ class_survey %>%
 
 ```{r}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
-  hypothesize(null = "independence")  
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
+  hypothesize(null = "independence")
 ```
 
 
@@ -283,12 +282,13 @@ class_survey %>%
 
 ```{r}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   hypothesize(null = "independence") %>%
-  generate(reps = 1,
-           type = "permute")
+  generate(reps = 1, type = "permute")
 ```
 
 
@@ -297,12 +297,13 @@ class_survey %>%
 
 ```{r}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   hypothesize(null = "independence") %>%
-  generate(reps = 1,
-           type = "permute") # a second shuffle
+  generate(reps = 1, type = "permute") # a second shuffle
 ```
 
 
@@ -310,12 +311,13 @@ class_survey %>%
 
 ```{r}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   hypothesize(null = "independence") %>%
-  generate(reps = 1,
-           type = "permute") # a third shuffle
+  generate(reps = 1, type = "permute") # a third shuffle
 ```
 
 
@@ -323,12 +325,13 @@ class_survey %>%
 
 ```{r}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   hypothesize(null = "independence") %>%
-  generate(reps = 500,  
-           type = "permute")
+  generate(reps = 500, type = "permute")
 ```
 
 
@@ -336,13 +339,14 @@ class_survey %>%
 
 ```{r}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   hypothesize(null = "independence") %>%
-  generate(reps = 500,
-           type = "permute") %>%
-  calculate(stat = "diff in props")  
+  generate(reps = 500, type = "permute") %>%
+  calculate(stat = "diff in props")
 ```
 
 
@@ -350,14 +354,15 @@ class_survey %>%
 
 ```{r fig.height=4}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   hypothesize(null = "independence") %>%
-  generate(reps = 500,
-           type = "permute") %>%
+  generate(reps = 500, type = "permute") %>%
   calculate(stat = "diff in props") %>%
-  visualize()  
+  visualize()
 ```
 
 
@@ -365,16 +370,16 @@ class_survey %>%
 
 ```{r fig.height=4}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   hypothesize(null = "independence") %>%
-  generate(reps = 500,
-           type = "permute") %>%
+  generate(reps = 500, type = "permute") %>%
   calculate(stat = "diff in props") %>%
   visualize() +
-  shade_pvalue(obs_stat = obs_stat,  
-               direction = "both")  
+  shade_pvalue(obs_stat = obs_stat, direction = "both")
 ```
 
 
@@ -387,16 +392,18 @@ set.seed(30)
 
 ```{r fig.height=4}
 class_survey %>%
-  specify(response = warm_fav,
-          explanatory = beach_or_mtns,
-          success = "TRUE") %>%
+  specify(
+    response = warm_fav,
+    explanatory = mts_beach,
+    success = "TRUE"
+  ) %>%
   hypothesize(null = "independence") %>%
-  generate(reps = 500,
-           type = "permute") %>%
+  generate(reps = 500, type = "permute") %>%
   calculate(stat = "diff in props") %>%
-  get_p_value(obs_stat = obs_stat,  
-               direction = "both")  
-```
+  get_p_value(obs_stat = obs_stat, direction = "both")
+``` 
+
+-->
 
 <!-- ## Your turn -->
 

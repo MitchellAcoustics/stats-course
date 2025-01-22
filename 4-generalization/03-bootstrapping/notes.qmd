@@ -79,17 +79,21 @@ Let's create the bootstrap sampling distribution for the example of food safety 
 #| code-fold: false
 #| echo: false
 
-load(url("https://www.dropbox.com/s/nbgw1uzj5ccwce2/fs_scores.rda?dl=1"))
+fs_scores <- read_csv("data/fs_scores.csv")
+fs_scores <- fs_scores$scores
 
 set.seed(103122)
 food_scores <- data.frame(score = sample(fs_scores, 100))
 
-boot_pop_dist <- ggplot(food_scores, aes(x = score)) + 
-      geom_histogram(breaks = seq(47.5, 100.5, by = 1), 
-                 color="black", fill="gray") + 
-      xlab("Food Safety Scores") +
-      ylab("Density") +
-      ggtitle("Bootstrap Population")
+boot_pop_dist <- ggplot(food_scores, aes(x = score)) +
+  geom_histogram(
+    breaks = seq(47.5, 100.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  xlab("Food Safety Scores") +
+  ylab("Density") +
+  ggtitle("Bootstrap Population")
 
 boot_pop_dist
 ```
@@ -114,12 +118,11 @@ boot <- food_scores %>%
   generate(reps = 500, type = "bootstrap") %>%
   calculate(stat = "mean")
 
-p_boot <- ggplot(boot, aes(x = stat)) + 
-      geom_histogram(bins = 45, 
-                 color="black", fill="gray") + 
-      xlab("Average Food Safety Scores for a SRS of 100") +
-      ylab("Density") +
-      ggtitle("Bootstrap Sampling Distribution")
+p_boot <- ggplot(boot, aes(x = stat)) +
+  geom_histogram(bins = 45, color = "black", fill = "gray") +
+  xlab("Average Food Safety Scores for a SRS of 100") +
+  ylab("Density") +
+  ggtitle("Bootstrap Sampling Distribution")
 
 p_boot
 ```
@@ -154,12 +157,11 @@ This model has an $R^2$ of 0.54. But, when we add information about the penguin'
 #| echo: false
 library(stat20data)
 
-penguins_adelie <- penguins %>% 
+penguins_adelie <- penguins %>%
   drop_na() %>%
   filter(species == "Adelie")
 
-lm_mfs <- lm(body_mass_g ~ sex + flipper_length_mm, 
-             data = penguins_adelie)
+lm_mfs <- lm(body_mass_g ~ sex + flipper_length_mm, data = penguins_adelie)
 
 lm_mfs
 ```
@@ -175,17 +177,27 @@ Recall that this model is equivalent to fitting two parallel lines, one for each
 #| echo: false
 
 a_male <- lm_mfs$coefficients[1] + lm_mfs$coefficients[2]
-a_female <- lm_mfs$coefficients[1] 
+a_female <- lm_mfs$coefficients[1]
 b <- lm_mfs$coefficients[3]
 
-ggplot(penguins_adelie, aes(x=flipper_length_mm, y = body_mass_g)) +
-  geom_point(aes(color=sex)) +
-  annotate("segment", x = 170, xend = 210, 
-           y = a_male+b*170, yend = a_male+b*210,
-           colour = "green") +
-  annotate("segment", x = 170, xend = 210, 
-           y = a_female+b*170, yend = a_female+b*210,
-           colour = "purple") +
+ggplot(penguins_adelie, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = sex)) +
+  annotate(
+    "segment",
+    x = 170,
+    xend = 210,
+    y = a_male + b * 170,
+    yend = a_male + b * 210,
+    colour = "green"
+  ) +
+  annotate(
+    "segment",
+    x = 170,
+    xend = 210,
+    y = a_female + b * 170,
+    yend = a_female + b * 210,
+    colour = "purple"
+  ) +
   theme_bw()
 ```
 
@@ -237,10 +249,8 @@ boot_coef <- penguins_adelie %>%
 
 boot_sampling_penguin <- boot_coef %>%
   filter(term == "flipper_length_mm") %>%
-  ggplot(aes(x = estimate,
-             y = ..density..)) +
-  geom_histogram(bins = 45, 
-                 color="black", fill="gray") + 
+  ggplot(aes(x = estimate, y = ..density..)) +
+  geom_histogram(bins = 45, color = "black", fill = "gray") +
   xlab("Coefficient for Flipper Length") +
   ylab("Density") +
   ggtitle("Bootstrap Sampling Distribution")
@@ -384,8 +394,7 @@ This function drops rows that have missing values (`NA`s). Add as arguments any 
 ```{r}
 #| echo: true
 #| code-fold: false
-df <- data.frame(rank = c(2, 3, 1, 4, NA),
-                 letter = c(NA, NA, NA, "d", "e"))
+df <- data.frame(rank = c(2, 3, 1, 4, NA), letter = c(NA, NA, NA, "d", "e"))
 
 df |>
   drop_na(rank)

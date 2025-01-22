@@ -26,10 +26,10 @@ library(patchwork)
 #| fig-width: 5
 #| fig-align: center
 #| echo: false
-pop_eager <- data.frame(year = rep(c(1, 2, 3, 4),
-                                   times = c(245, 210, 47, 25)),
-                        eagerness = rep(c(10, 6, 3, 1),
-                                        times = c(245, 210, 47, 25)))
+pop_eager <- data.frame(
+  year = rep(c(1, 2, 3, 4), times = c(245, 210, 47, 25)),
+  eagerness = rep(c(10, 6, 3, 1), times = c(245, 210, 47, 25))
+)
 set.seed(55)
 pop_eager <- pop_eager %>%
   slice_sample(n = nrow(pop_eager))
@@ -39,27 +39,29 @@ mu <- mean(pop_eager$year)
 p_pop <- pop_eager %>%
   ggplot(aes(x = year)) +
   geom_bar(fill = "purple") +
-  labs(title = "Population Distribution",
-       y = "") +
-  annotate("point", x = mu, y = -20, shape = 17, size = 5, color = "goldenrod2") +
+  labs(title = "Population Distribution", y = "") +
+  annotate(
+    "point",
+    x = mu,
+    y = -20,
+    shape = 17,
+    size = 5,
+    color = "goldenrod2"
+  ) +
   theme_gray(base_size = 10) +
-  theme(plot.title = element_text(size=10))
+  theme(plot.title = element_text(size = 10))
 
 library(infer)
 samp_1 <- pop_eager %>%
-  slice_sample(n = 18,
-                   replace = FALSE,
-                   weight_by = eagerness)
+  slice_sample(n = 18, replace = FALSE, weight_by = eagerness)
 
 many_samps <- samp_1 %>%
   mutate(Sample = 1)
 
 for (i in 2:500) {
   many_samps <- pop_eager %>%
-    slice_sample(n = 18,
-                 replace = FALSE,
-                 weight_by = eagerness) %>%
-    mutate(Sample = i ) %>%
+    slice_sample(n = 18, replace = FALSE, weight_by = eagerness) %>%
+    mutate(Sample = i) %>%
     bind_rows(many_samps)
 }
 
@@ -73,13 +75,22 @@ p_samp_dist <- many_xbars %>%
   ggplot(aes(x = xbar)) +
   geom_bar(fill = "purple") +
   lims(x = c(0, 4)) +
-  labs(title = "Sampling Distribution",
-       y = "",
-       x = expression(paste(bar(x), " (mean year)"))) +
-  geom_vline(xintercept = mu, color = "tomato") + 
-  annotate("point", x = mean(many_xbars$xbar), y = -10, shape = 17, size = 5, color = "goldenrod2") +
+  labs(
+    title = "Sampling Distribution",
+    y = "",
+    x = expression(paste(bar(x), " (mean year)"))
+  ) +
+  geom_vline(xintercept = mu, color = "tomato") +
+  annotate(
+    "point",
+    x = mean(many_xbars$xbar),
+    y = -10,
+    shape = 17,
+    size = 5,
+    color = "goldenrod2"
+  ) +
   theme_gray(base_size = 10) +
-  theme(plot.title = element_text(size=10)) +
+  theme(plot.title = element_text(size = 10)) +
   lims(x = xlims_from_pop)
 p_samp_dist
 ```
@@ -117,15 +128,22 @@ Our population consists of the restaurants in San Francisco. Since the data are 
 #| fig-align: center
 #| echo: false
 
-load(url("https://www.dropbox.com/s/nbgw1uzj5ccwce2/fs_scores.rda?dl=1"))
+fs_scores <- read_csv("data/fs_scores.csv")
+fs_scores <- fs_scores$scores
 
-pop_dist <- ggplot(as.data.frame(fs_scores), aes(x=fs_scores, y=..density..)) + 
-      geom_histogram(breaks=seq(47.5, 100.5, by = 1), 
-                 color="black", fill="gray") +
-      geom_vline(xintercept = mean(fs_scores), color = "tomato") +
-      xlab("Food Safety Scores") +
-      ylab("Proportion") +
-      ggtitle("Population Distribution")
+pop_dist <- ggplot(
+  as.data.frame(fs_scores),
+  aes(x = fs_scores, y = after_stat(density))
+) +
+  geom_histogram(
+    breaks = seq(47.5, 100.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  geom_vline(xintercept = mean(fs_scores), color = "tomato") +
+  xlab("Food Safety Scores") +
+  ylab("Proportion") +
+  ggtitle("Population Distribution")
 
 pop_dist
 ```
@@ -156,12 +174,15 @@ The distribution of this sample (an empirical distribution) looks like:
 set.seed(103122)
 samp_scores <- sample(fs_scores, 100)
 
-emp_dist <- ggplot(as.data.frame(samp_scores), aes(x=samp_scores)) + 
-      geom_histogram(breaks=seq(47.5, 100.5, by = 1), 
-                 color="black", fill="gray") + 
-      xlab("Food Safety Scores") +
-      ylab("Proportion") +
-      ggtitle("Empirical Dist. (Sample 1)")
+emp_dist <- ggplot(as.data.frame(samp_scores), aes(x = samp_scores)) +
+  geom_histogram(
+    breaks = seq(47.5, 100.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  xlab("Food Safety Scores") +
+  ylab("Proportion") +
+  ggtitle("Empirical Dist. (Sample 1)")
 
 emp_dist
 ```
@@ -193,13 +214,14 @@ Ordinarily this distribution takes some work to create, but in this thought-expe
 set.seed(10312022)
 samp_means <- replicate(100000, mean(sample(fs_scores, 100)))
 
-sampling_dist <- ggplot(as.data.frame(samp_means), 
-                        aes(x=samp_means, y=..density..)) + 
-      geom_histogram(bins = 45, 
-                 color="black", fill="gray") + 
-      xlab("Average Food Safety Scores") +
-      ylab("Proportion") +
-      ggtitle("Sampling Distribution")
+sampling_dist <- ggplot(
+  as.data.frame(samp_means),
+  aes(x = samp_means, y = after_stat(density))
+) +
+  geom_histogram(bins = 45, color = "black", fill = "gray") +
+  xlab("Average Food Safety Scores") +
+  ylab("Proportion") +
+  ggtitle("Sampling Distribution")
 
 sampling_dist
 ```
@@ -400,18 +422,26 @@ Let's simulate it! At the bottom of the plot below, the horizontal line at the $
 set.seed(10312022)
 samp25_means <- replicate(100, mean(sample(fs_scores, 25)))
 
-lower <- samp25_means - 1.96 * sd(fs_scores)/5
-upper <- samp25_means + 1.96 * sd(fs_scores)/5
+lower <- samp25_means - 1.96 * sd(fs_scores) / 5
+upper <- samp25_means + 1.96 * sd(fs_scores) / 5
 trial <- 1:100
 cover <- (mean(fs_scores) >= lower) & (mean(fs_scores) <= upper)
 CIs <- data.frame(trial, lower, upper, cover)
 
 ci100 <- ggplot(CIs, aes(y = trial)) +
-  geom_segment(aes(x=lower, y=trial, xend=upper, yend=trial, color= cover), 
-               show.legend=FALSE) +
-  annotate("segment", x=mean(fs_scores), xend=mean(fs_scores),
-                y=0, yend=101, color="black") +
-  labs(x=expression(bar(x)), y = "Iteration") +
+  geom_segment(
+    aes(x = lower, y = trial, xend = upper, yend = trial, color = cover),
+    show.legend = FALSE
+  ) +
+  annotate(
+    "segment",
+    x = mean(fs_scores),
+    xend = mean(fs_scores),
+    y = 0,
+    yend = 101,
+    color = "black"
+  ) +
+  labs(x = expression(bar(x)), y = "Iteration") +
   theme_minimal()
 
 ci100
@@ -443,28 +473,40 @@ The thought-experiment appears as
 #| fig-height: 3
 #| echo: false
 
-hi_score_dist <- ggplot(as.data.frame(hi_scores), 
-                        aes(x=hi_scores, y=..density..)) + 
-      geom_histogram(breaks=seq(-0.5, 1.5, by = 1), 
-                 color="black", fill="gray") + 
-      xlab("Excellent score?") +
-      ylab("Proportion") +
-      ggtitle("Population")
+hi_score_dist <- ggplot(
+  as.data.frame(hi_scores),
+  aes(x = hi_scores, y = ..density..)
+) +
+  geom_histogram(
+    breaks = seq(-0.5, 1.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  xlab("Excellent score?") +
+  ylab("Proportion") +
+  ggtitle("Population")
 
-hi_samp_dist <- ggplot(as.data.frame(hi_score_samp), aes(x=hi_score_samp, y=..density..)) + 
-      geom_histogram(breaks=seq(-0.5, 1.5, by = 1), 
-                 color="black", fill="gray") + 
-      xlab("Excellent scores?") +
-      ylab("Proportion") +
-      ggtitle("Empirical Distribution")
+hi_samp_dist <- ggplot(
+  as.data.frame(hi_score_samp),
+  aes(x = hi_score_samp, y = ..density..)
+) +
+  geom_histogram(
+    breaks = seq(-0.5, 1.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  xlab("Excellent scores?") +
+  ylab("Proportion") +
+  ggtitle("Empirical Distribution")
 
-hi_sampling_dist <- ggplot(as.data.frame(hi_score_means), 
-                        aes(x=hi_score_means, y=..density..)) + 
-      geom_histogram(bins = 16, 
-                 color="black", fill="gray") + 
-      xlab("Proportion excellent") +
-      ylab("Proportion") +
-      ggtitle("Sampling Distribution")
+hi_sampling_dist <- ggplot(
+  as.data.frame(hi_score_means),
+  aes(x = hi_score_means, y = ..density..)
+) +
+  geom_histogram(bins = 16, color = "black", fill = "gray") +
+  xlab("Proportion excellent") +
+  ylab("Proportion") +
+  ggtitle("Sampling Distribution")
 
 hi_score_dist + hi_samp_dist + hi_sampling_dist
 ```

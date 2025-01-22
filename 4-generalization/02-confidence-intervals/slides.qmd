@@ -45,9 +45,7 @@ library(stat20data)
 set.seed(5)
 flights %>%
   slice_sample(n = 30) %>%
-  summarize(xbar = mean(air_time),
-            sx = sd(air_time),
-            n = n())
+  summarize(xbar = mean(air_time), sx = sd(air_time), n = n())
 ```
 
 :::poll
@@ -128,7 +126,8 @@ countdown::countdown(2)
 library(tidyverse)
 library(patchwork)
 
-load(url("https://www.dropbox.com/s/nbgw1uzj5ccwce2/fs_scores.rda?dl=1"))
+fs_scores <- read_csv("data/fs_scores.csv")
+fs_scores <- fs_scores$scores
 
 set.seed(103122)
 samp_scores <- sample(fs_scores, 100)
@@ -136,27 +135,40 @@ samp_scores <- sample(fs_scores, 100)
 set.seed(10312022)
 samp_means <- replicate(100000, mean(sample(fs_scores, 100)))
 
-pop_dist <- ggplot(as.data.frame(fs_scores), aes(x=fs_scores, y=..density..)) + 
-      geom_histogram(breaks=seq(47.5, 100.5, by = 1), 
-                 color="black", fill="gray") + 
-      xlab("Food Safety Scores") +
-      ylab("Proportion") +
-      ggtitle("Population Distribution")
+pop_dist <- ggplot(
+  as.data.frame(fs_scores),
+  aes(x = fs_scores, y = ..density..)
+) +
+  geom_histogram(
+    breaks = seq(47.5, 100.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  xlab("Food Safety Scores") +
+  ylab("Proportion") +
+  ggtitle("Population Distribution")
 
-emp_dist <- ggplot(as.data.frame(samp_scores), aes(x=samp_scores, y=..density..)) + 
-      geom_histogram(breaks=seq(47.5, 100.5, by = 1), 
-                 color="black", fill="gray") + 
-      xlab("Food Safety Scores") +
-      ylab("Proportion") +
-      ggtitle("Empirical Distribution")
+emp_dist <- ggplot(
+  as.data.frame(samp_scores),
+  aes(x = samp_scores, y = ..density..)
+) +
+  geom_histogram(
+    breaks = seq(47.5, 100.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  xlab("Food Safety Scores") +
+  ylab("Proportion") +
+  ggtitle("Empirical Distribution")
 
-sampling_dist <- ggplot(as.data.frame(samp_means), 
-                        aes(x=samp_means, y=..density..)) + 
-      geom_histogram(bins = 45, 
-                 color="black", fill="gray") + 
-      xlab("Average Food Safety Scores for a SRS of 100") +
-      ylab("Proportion") +
-      ggtitle("Sampling Distribution")
+sampling_dist <- ggplot(
+  as.data.frame(samp_means),
+  aes(x = samp_means, y = ..density..)
+) +
+  geom_histogram(bins = 45, color = "black", fill = "gray") +
+  xlab("Average Food Safety Scores for a SRS of 100") +
+  ylab("Proportion") +
+  ggtitle("Sampling Distribution")
 
 pop_dist + emp_dist + sampling_dist
 ```
@@ -191,7 +203,8 @@ This plot and example are from the notes. It is probably good to remind them tha
 library(tidyverse)
 library(patchwork)
 
-load(url("https://www.dropbox.com/s/nbgw1uzj5ccwce2/fs_scores.rda?dl=1"))
+fs_scores <- read_csv("data/fs_scores.csv")
+fs_scores <- fs_scores$scores
 
 set.seed(103122)
 samp_scores <- sample(fs_scores, 100)
@@ -199,27 +212,40 @@ samp_scores <- sample(fs_scores, 100)
 set.seed(10312022)
 samp_means <- replicate(100000, mean(sample(fs_scores, 100)))
 
-pop_dist <- ggplot(as.data.frame(fs_scores), aes(x=fs_scores, y=..density..)) + 
-      geom_histogram(breaks=seq(47.5, 100.5, by = 1), 
-                 color="black", fill="gray") + 
-      xlab("Food Safety Scores") +
-      ylab("Proportion") +
-      ggtitle("Population Distribution")
+pop_dist <- ggplot(
+  as.data.frame(fs_scores),
+  aes(x = fs_scores, y = ..density..)
+) +
+  geom_histogram(
+    breaks = seq(47.5, 100.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  xlab("Food Safety Scores") +
+  ylab("Proportion") +
+  ggtitle("Population Distribution")
 
-emp_dist <- ggplot(as.data.frame(samp_scores), aes(x=samp_scores, y=..density..)) + 
-      geom_histogram(breaks=seq(47.5, 100.5, by = 1), 
-                 color="black", fill="gray") + 
-      xlab("Food Safety Scores") +
-      ylab("Proportion") +
-      ggtitle("Empirical Distribution")
+emp_dist <- ggplot(
+  as.data.frame(samp_scores),
+  aes(x = samp_scores, y = ..density..)
+) +
+  geom_histogram(
+    breaks = seq(47.5, 100.5, by = 1),
+    color = "black",
+    fill = "gray"
+  ) +
+  xlab("Food Safety Scores") +
+  ylab("Proportion") +
+  ggtitle("Empirical Distribution")
 
-sampling_dist <- ggplot(as.data.frame(samp_means), 
-                        aes(x=samp_means, y=..density..)) + 
-      geom_histogram(bins = 45, 
-                 color="black", fill="gray") + 
-      xlab("Average Food Safety Scores for a SRS of 100") +
-      ylab("Proportion") +
-      ggtitle("Sampling Distribution")
+sampling_dist <- ggplot(
+  as.data.frame(samp_means),
+  aes(x = samp_means, y = ..density..)
+) +
+  geom_histogram(bins = 45, color = "black", fill = "gray") +
+  xlab("Average Food Safety Scores for a SRS of 100") +
+  ylab("Proportion") +
+  ggtitle("Sampling Distribution")
 
 pop_dist + emp_dist + sampling_dist
 ```
