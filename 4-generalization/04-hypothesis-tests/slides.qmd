@@ -74,7 +74,7 @@ We want to understand whether blood thinners are helpful or harmful. We’ll con
 *Alternative*: Blood thinners have an impact on survival, either positive or negative, but not zero.
 :::
 
-![](4-generalization/04-hypothesis-tests/images/two-sided.png){fig-width="400" fig-align="center"}
+![](images/two-sided.png){fig-width="400" fig-align="center"}
 
 :::poll
 What is your guess at the p-value?
@@ -163,21 +163,21 @@ Answer at `pollev.com`.
 # Hypothesis Testing with `infer`
 
 
-## {background-image="4-generalization/04-hypothesis-tests/images/pic-5.jpg" background-size="contain"}
+## {background-image="images/pic-5.jpg" background-size="contain"}
 
-## {background-image="4-generalization/04-hypothesis-tests/images/pic-6.jpg" background-size="contain"}
+## {background-image="images/pic-6.jpg" background-size="contain"}
 
-## {background-image="4-generalization/04-hypothesis-tests/images/pic-7.jpg" background-size="contain"}
+## {background-image="images/pic-7.jpg" background-size="contain"}
 
-## {background-image="4-generalization/04-hypothesis-tests/images/pic-8.jpg" background-size="contain"}
+## {background-image="images/pic-8.jpg" background-size="contain"}
 
-## {background-image="4-generalization/04-hypothesis-tests/images/pic-9.jpg" background-size="contain"}
+## {background-image="images/pic-9.jpg" background-size="contain"}
 
-## {background-image="4-generalization/04-hypothesis-tests/images/pic-10.jpg" background-size="contain"}
+## {background-image="images/pic-10.jpg" background-size="contain"}
 
-## {background-image="4-generalization/04-hypothesis-tests/images/pic-11.jpg" background-size="contain"}
+## {background-image="images/pic-11.jpg" background-size="contain"}
 
-## {background-image="4-generalization/04-hypothesis-tests/images/pic-12.jpg" background-size="contain"}
+## {background-image="images/pic-12.jpg" background-size="contain"}
 
 # Appendix
 

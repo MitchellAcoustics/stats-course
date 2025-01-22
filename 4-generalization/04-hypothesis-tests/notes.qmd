@@ -18,7 +18,7 @@ The hypothesis test takes a more active approach to reasoning: it posits a speci
 
 ## Example: The United States vs Kristen Gilbert
 
-![](4-generalization/04-hypothesis-tests/images/northampton-va.jpg){fig-align="center" width="400"}
+![](images/northampton-va.jpg){fig-align="center" width="400"}
 
 In 1989, fresh out of nursing school, Kristen Gilbert got a job at the VA Medical Center in Northampton, Massachusetts, not far from where she grew up[^1]. Within a few years, she became admired for her skill and competence.
 
@@ -32,7 +32,7 @@ By the mid-1990s, however, the other nurses started to grow suspicious. There se
 
 The data that the VA provided to the statistician contained the number of deaths at the medical center over the previous 10 years, broken out by the three shifts of the days: night, daytime, and evening. As part of the process of exploratory data analysis, the statistician constructed a plot.
 
-![](4-generalization/04-hypothesis-tests/images/shift-deaths.jpeg){fig-align="center" width="550"}
+![](images/shift-deaths.jpeg){fig-align="center" width="550"}
 
 This visualization reveals several striking trends. Between 1990 and 1995, there were dramatically more deaths than the years before and after that interval. Within that time span, it was the evening shift that had most of the deaths. The exception is 1990, when the night and daytime shifts had the most deaths.
 
@@ -299,7 +299,7 @@ A postscript on the case of Kristen Gilbert. Although the hypothesis test ruled 
 
 A hypothesis test using permutation can be implemented by introducing one new step into the process used for calculating a bootstrap interval. The key distinction is that in a hypothesis test the researchers puts forth a model for how the data could be generated. That is the role of `hypothesize()`.
 
-![](4-generalization/04-hypothesis-tests/images/infer-hypothesize.png){fig-align="center" width="440"}
+![](images/infer-hypothesize.png){fig-align="center" width="440"}
 
 #### hypothesize()
 
