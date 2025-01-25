@@ -3,10 +3,10 @@ project:
 
 # Modify aesthetics and add docs to navbar
 website:
-  title: "Stat 20 Staff Site"
+  title: "BSSC Data Analytics Staff Site"
   draft-mode: visible
   open-graph:
-    site-name: "Stat 20 Staff Site"
+    site-name: "BSSC Data Analytics Staff Site"
   navbar:
     background: warning
     right:

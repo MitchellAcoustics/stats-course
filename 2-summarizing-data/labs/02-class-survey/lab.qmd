@@ -45,9 +45,7 @@ For this question only, you may use the following, modified dataset, which can b
 #| eval: false
 #| echo: true
 #| code-fold: false
-filtered_survey <- filter(class_survey, 
-                          new_COVID_variant >= 0,
-                          new_COVID_variant < 1)
+filtered_survey <- filter(class_survey, covid >= 0, covid < 1)
 ```
 
 > What are students' perceptions of the chance that there is a new COVID variant that disrupts instruction in Fall 2022?

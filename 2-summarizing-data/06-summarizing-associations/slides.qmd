@@ -52,12 +52,11 @@ What is the (Pearson) correlation coefficient between these two variables?
 library(tidyverse)
 n_samples <- 100
 set.seed(1)
-x <- runif(n = n_samples, min = -1, max = 1) 
+x <- runif(n = n_samples, min = -1, max = 1)
 y <- -x + rnorm(n = n_samples, mean = 0, sd = .1)
 
-data.frame(x = x, 
-           y = y) %>% 
-  ggplot(aes(x = x, y = y)) +  
+data.frame(x = x, y = y) %>%
+  ggplot(aes(x = x, y = y)) +
   geom_point() +
   theme_bw()
 ```
@@ -84,9 +83,9 @@ set.seed(9274)
 
 x1 <- seq(0, 6, by = 0.05)
 
-y_u <- (x1-3)^2 - 4 + rnorm(length(x1), mean = 0, sd = 1)
-y_lin_pos_strong <- 3*x1 + 10 + rnorm(length(x1), mean = 0, sd = 2)
-y_lin_pos_weak <- 3*x1 + 10 + rnorm(length(x1), mean = 0, sd = 20)
+y_u <- (x1 - 3)^2 - 4 + rnorm(length(x1), mean = 0, sd = 1)
+y_lin_pos_strong <- 3 * x1 + 10 + rnorm(length(x1), mean = 0, sd = 2)
+y_lin_pos_weak <- 3 * x1 + 10 + rnorm(length(x1), mean = 0, sd = 20)
 
 x2 <- seq(-8, -2, by = 0.05)
 
@@ -94,96 +93,97 @@ y_n <- -1 * (x2 + 5)^2 + 1 + rnorm(length(x2), mean = 0, sd = 2)
 y_lin_neg_strong <- -5 * x2 + 3 + rnorm(length(x2), mean = 0, sd = 2)
 y_none <- rnorm(length(x2), mean = 0, sd = 1)
 
-df <- data.frame(x = c(rep(x1, 3), rep(x2, 3)),
-                 y = c(y_u, y_lin_pos_strong, y_lin_pos_weak,
-                       y_n, y_lin_neg_strong, y_none),
-                 plot_num = rep(LETTERS[1:6], each = length(x1)))
+df <- data.frame(
+  x = c(rep(x1, 3), rep(x2, 3)),
+  y = c(y_u, y_lin_pos_strong, y_lin_pos_weak, y_n, y_lin_neg_strong, y_none),
+  plot_num = rep(LETTERS[1:6], each = length(x1))
+)
 
 library(tidyverse)
 pa <- df %>%
-    filter(plot_num == "A") %>%
-    ggplot(aes(x = x, 
-               y = y)) +
-    geom_point() +
-    facet_wrap(vars(plot_num), scales = "free") +
-    theme_bw(base_size = 14) +
-    theme(axis.text.x=element_blank(),
-          axis.ticks.x=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks.y=element_blank()) +
-    labs(x = "",
-         y = "")
+  filter(plot_num == "A") %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(vars(plot_num), scales = "free") +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(x = "", y = "")
 
 pb <- df %>%
-    filter(plot_num == "B") %>%
-    ggplot(aes(x = x, 
-               y = y)) +
-    geom_point() +
-    facet_wrap(vars(plot_num), scales = "free") +
-    theme_bw(base_size = 14) +
-    theme(axis.text.x=element_blank(),
-          axis.ticks.x=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks.y=element_blank()) +
-    labs(x = "",
-         y = "")
+  filter(plot_num == "B") %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(vars(plot_num), scales = "free") +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(x = "", y = "")
 
 pc <- df %>%
-    filter(plot_num == "C") %>%
-    ggplot(aes(x = x, 
-               y = y)) +
-    geom_point() +
-    facet_wrap(vars(plot_num), scales = "free") +
-    theme_bw(base_size = 14) +
-    theme(axis.text.x=element_blank(),
-          axis.ticks.x=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks.y=element_blank()) +
-    labs(x = "",
-         y = "")
+  filter(plot_num == "C") %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(vars(plot_num), scales = "free") +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(x = "", y = "")
 
 pd <- df %>%
-    filter(plot_num == "D") %>%
-    ggplot(aes(x = x, 
-               y = y)) +
-    geom_point() +
-    facet_wrap(vars(plot_num), scales = "free") +
-    theme_bw(base_size = 14) +
-    theme(axis.text.x=element_blank(),
-          axis.ticks.x=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks.y=element_blank()) +
-    labs(x = "",
-         y = "")
+  filter(plot_num == "D") %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(vars(plot_num), scales = "free") +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(x = "", y = "")
 
 pe <- df %>%
-    filter(plot_num == "E") %>%
-    ggplot(aes(x = x, 
-               y = y)) +
-    geom_point() +
-    facet_wrap(vars(plot_num), scales = "free") +
-    theme_bw(base_size = 14) +
-    theme(axis.text.x=element_blank(),
-          axis.ticks.x=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks.y=element_blank()) +
-    labs(x = "",
-         y = "")
+  filter(plot_num == "E") %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(vars(plot_num), scales = "free") +
+  theme_bw(base_size = 14) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(x = "", y = "")
 
 pf <- df %>%
-    filter(plot_num == "F") %>%
-    ggplot(aes(x = x, 
-               y = y)) +
-    geom_point() +
-    facet_wrap(vars(plot_num), scales = "free") +
-    theme_bw(base_size = 14) +
-    ylim(-9, 9) +
-    theme(axis.text.x=element_blank(),
-          axis.ticks.x=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks.y=element_blank()) +
-    labs(x = "",
-         y = "")
+  filter(plot_num == "F") %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(vars(plot_num), scales = "free") +
+  theme_bw(base_size = 14) +
+  ylim(-9, 9) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(x = "", y = "")
 
 library(patchwork)
 (pa + pb + pc) / (pd + pe + pf)
@@ -206,7 +206,7 @@ Student will likely identify A, B, E, and F. F only appears to be highly associa
 ```{r}
 #| echo: false
 df_f <- filter(df, plot_num == "F") %>%
-    select(x, y)
+  select(x, y)
 ```
 
 
@@ -217,7 +217,8 @@ df_f <- filter(df, plot_num == "F") %>%
 #| echo: true
 #| eval: false
 df_f
-```
+``
+`
 :::
 
 ::: {.column width="55%"}
@@ -231,10 +232,16 @@ df_f
 :::: {.columns}
 
 ::: {.column width="45%"}
-```{r}
+`
+``
+{
+  r
+}
 #| echo: true
 df_f
-```
+`
+`
+`
 :::
 
 ::: {.column width="55%"}
@@ -248,16 +255,20 @@ df_f
 :::: {.columns}
 
 ::: {.column width="45%"}
-```{r}
+`
+``
+{
+  r
+}
 #| echo: true
 #| eval: false
 df_f %>%
-    ggplot(aes(x = x,
-               y = y)) +
-    geom_point() +
-    ylim(-9, 9) +
-    theme_bw()
-```
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  ylim(-9, 9) +
+  theme_bw()
+``
+`
 :::
 
 ::: {.column width="55%"}
@@ -271,30 +282,39 @@ df_f %>%
 :::: {.columns}
 
 ::: {.column width="45%"}
-```{r}
+`
+``
+{
+  r
+}
 #| echo: true
 #| eval: false
 df_f %>%
-    ggplot(aes(x = x,
-               y = y)) +
-    geom_point() +
-    ylim(-9, 9) +
-    theme_bw()
-```
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  ylim(-9, 9) +
+  theme_bw()
+`
+`
+`
 :::
 
 ::: {.column width="55%"}
-```{r}
+`
+``
+{
+  r
+}
 #| echo: false
 #| eval: true
 #| fig-height: 8
 df_f %>%
-    ggplot(aes(x = x,
-               y = y)) +
-    geom_point(size = 5) +
-    ylim(-9, 9) +
-    theme_bw(base_size = 36)
-```
+  ggplot(aes(x = x, y = y)) +
+  geom_point(size = 5) +
+  ylim(-9, 9) +
+  theme_bw(base_size = 36)
+``
+`
 :::
 
 ::::
@@ -304,15 +324,20 @@ df_f %>%
 :::: {.columns}
 
 ::: {.column width="45%"}
-```{r}
+`
+``
+{
+  r
+}
 #| echo: true
 #| eval: false
 df_f %>%
-    ggplot(aes(x = x,
-               y = y)) +
-    geom_point() +
-    theme_bw()
-```
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  theme_bw()
+`
+`
+`
 :::
 
 ::: {.column width="55%"}
@@ -326,40 +351,53 @@ df_f %>%
 :::: {.columns}
 
 ::: {.column width="45%"}
-```{r}
+`
+``
+{
+  r
+}
 #| echo: true
 #| eval: false
 df_f %>%
-    ggplot(aes(x = x,
-               y = y)) +
-    geom_point() +
-    theme_bw()
-```
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  theme_bw()
+``
+`
 :::
 
 ::: {.column width="55%"}
-```{r}
+`
+``
+{
+  r
+}
 #| echo: false
 #| eval: true
 #| fig-height: 8
 df_f %>%
-    ggplot(aes(x = x,
-               y = y)) +
-    geom_point(size = 5) +
-    theme_bw(base_size = 36)
+  ggplot(aes(x = x, y = y)) +
+  geom_point(size = 5) +
+  theme_bw(base_size = 36)
 
-```
+`
+`
+`
 :::
 
 ::::
 
 ## Pearson Correlation and Scale {auto-animate=true}
 
-```{r}
+`
+``
+{
+  r
+}
 #| echo: true
 #| eval: false
 df_f %>%
-    summarize(pearson = cor(x, y))
+  summarize(pearson = cor(x, y))
 ```
 
 
@@ -368,7 +406,7 @@ df_f %>%
 ```{r}
 #| echo: true
 df_f %>%
-    summarize(pearson = cor(x, y))
+  summarize(pearson = cor(x, y))
 ```
 
 
@@ -422,22 +460,18 @@ When considering the structure in a scatter plot, pay attention to:
 
 ```{r}
 #| fig-width: 5
-#| fig-height: 3
+#| #| fig-height: 3
 #| fig-align: center
 
-poverty <- read_delim("https://www.dropbox.com/s/0z45xgms0sie7l9/poverty.csv?dl=1")
+poverty <- read_csv("data/poverty.csv")
 
 m1 <- lm(Graduates ~ Poverty, data = poverty)
 
 p_nolabs <- poverty %>%
-  ggplot(aes(x = Poverty, 
-             y = Graduates)) +
+  ggplot(aes(x = Poverty, y = Graduates)) +
   geom_point() +
-  geom_abline(slope = coef(m1)[2],
-              intercept = coef(m1)[1],
-              color = "blue") +
-  labs(x = "Poverty Rate",
-       y = "Graduation Rate") +
+  geom_abline(slope = coef(m1)[2], intercept = coef(m1)[1], color = "blue") +
+  labs(x = "Poverty Rate", y = "Graduation Rate") +
   theme_bw()
 
 p_nolabs
@@ -490,7 +524,7 @@ countdown::countdown(1, top = 0)
 #| fig-align: center
 
 library(ggrepel)
-p_nolabs +   
+p_nolabs +
   geom_text_repel(aes(label = State), size = 3)
 ```
 

@@ -38,12 +38,13 @@ The result was a data frame with 619 rows (one for every respondent) and 2 colum
 #| code-fold: false
 #| echo: false
 set.seed(20)
-ggplot(class_survey, aes(x = tech,
-                         y = crypto)) +
-    geom_point() +
-    labs(x = "Technology is destructive to relationships",
-         y = "cryptocurrency will play a\n dominant role in finance",
-         title = "No association between opinions on technology and \n cryptocurrency")
+ggplot(class_survey, aes(x = tech_relationships, y = crypto)) +
+  geom_point() +
+  labs(
+    x = "Technology is destructive to relationships",
+    y = "cryptocurrency will play a\n dominant role in finance",
+    title = "No association between opinions on technology and \n cryptocurrency"
+  )
 ```
 
 The eye is immediately drawn to the eerie geometric regularity of this data. Isn't real data messier than this? What's going on?
@@ -61,12 +62,13 @@ One approach to fixing the problem of points piled on top of one another is to u
 #| fig-width: 5
 #| fig-height: 4
 #| code-fold: false
-ggplot(class_survey, aes(x = tech,
-                         y = crypto)) +
-    geom_jitter() +
-    labs(x = "Technology is destructive to relationships",
-         y = "cryptocurrency will play a\n dominant role in finance",
-         title = "No association between opinions on technology and \n cryptocurrency")
+ggplot(class_survey, aes(x = tech_relationships, y = crypto)) +
+  geom_jitter() +
+  labs(
+    x = "Technology is destructive to relationships",
+    y = "cryptocurrency will play a\n dominant role in finance",
+    title = "No association between opinions on technology and \n cryptocurrency"
+  )
 ```
 
 Ahh . . . there are those previously hidden students. Interestingly, the title on the first plot still holds true: even when we're looking at *all* of the students, there doesn't appear to be much of a pattern. That is certainly not the case in all overplotted data sets! Often overplotting will obscure a pattern that jumps out after the overplotting has been attended to.
@@ -78,12 +80,13 @@ The second technique is to make the points transparent by changing an aesthetic 
 #| fig-width: 5
 #| fig-height: 4
 #| code-fold: false
-ggplot(class_survey, aes(x = tech,
-                         y = crypto)) +
-    geom_jitter(alpha = .3) +
-    labs(x = "Technology is destructive to relationships",
-         y = "cryptocurrency will play a\n dominant role in finance",
-         title = "No association between opinions on technology and \n cryptocurrency")
+ggplot(class_survey, aes(x = tech_relationships, y = crypto)) +
+  geom_jitter(alpha = .3) +
+  labs(
+    x = "Technology is destructive to relationships",
+    y = "cryptocurrency will play a\n dominant role in finance",
+    title = "No association between opinions on technology and \n cryptocurrency"
+  )
 ```
 
 The `alpha` argument runs between 0 and 1, where 1 is fully opaque and 0 is fully see-through. Here, `alpha = .3`, which changes all observations from black to gray. Where the points overlap, their alpha values add to create a dark blob.
@@ -96,45 +99,46 @@ There's still no sign of a strong association between these variables, but at le
 [W]{.dropcap}hich of the following plots do you think depicts the relationship between the high school graduation rate and the poverty rate among the 50 US states?
 
 :::{.content-visible when-format="html"}
+
 ```{r}
 #| fig-height: 3
 #| fig-width: 6.2
 #| fig-align: center
 #| code-fold: false
 #| echo: false
-poverty <- read_delim("https://www.dropbox.com/s/0z45xgms0sie7l9/poverty.csv?dl=1")
+poverty <- read_csv("data/poverty.csv")
 
 poverty <- poverty %>%
-  mutate(group = case_when(
-    Poverty < 9 ~ "low",
-    Poverty >= 9 & Poverty <= 13 ~ "med",
-    Poverty > 13 ~ "hi"
-  )) 
+  mutate(
+    group = case_when(
+      Poverty < 9 ~ "low",
+      Poverty >= 9 & Poverty <= 13 ~ "med",
+      Poverty > 13 ~ "hi"
+    )
+  )
 
-pA <- ggplot(poverty, aes(x = Poverty, 
-                    y = Graduates)) +
+pA <- ggplot(poverty, aes(x = Poverty, y = Graduates)) +
   geom_point() +
-  labs(x = "Poverty Rate",
-       y = "Graduation Rate") +
+  labs(x = "Poverty Rate", y = "Graduation Rate") +
   theme_bw()
 
 set.seed(50)
 poverty_shuffled <- poverty
 poverty_shuffled$Graduates <- sample(poverty$Graduates)
 
-pB <- ggplot(poverty_shuffled, aes(x = Poverty, 
-                    y = Graduates)) +
+pB <- ggplot(poverty_shuffled, aes(x = Poverty, y = Graduates)) +
   geom_point() +
-  labs(x = "Poverty Rate",
-       y = "Graduation Rate") +
+  labs(x = "Poverty Rate", y = "Graduation Rate") +
   theme_bw()
 
 library(patchwork)
 pA + pB
 ```
+
 :::
 
 :::{.content-visible when-format="pdf"}
+
 ```{r}
 #| fig-height: 3
 #| fig-width: 6.2
@@ -142,36 +146,35 @@ pA + pB
 #| echo: false
 #| code-fold: false
 
-poverty <- read_delim("https://www.dropbox.com/s/0z45xgms0sie7l9/poverty.csv?dl=1")
+poverty <- read_csv("data/poverty.csv")
 
 poverty <- poverty %>%
-  mutate(group = case_when(
-    Poverty < 9 ~ "low",
-    Poverty >= 9 & Poverty <= 13 ~ "med",
-    Poverty > 13 ~ "hi"
-  )) 
+  mutate(
+    group = case_when(
+      Poverty < 9 ~ "low",
+      Poverty >= 9 & Poverty <= 13 ~ "med",
+      Poverty > 13 ~ "hi"
+    )
+  )
 
-pA <- ggplot(poverty, aes(x = Poverty, 
-                    y = Graduates)) +
+pA <- ggplot(poverty, aes(x = Poverty, y = Graduates)) +
   geom_point() +
-  labs(x = "Poverty Rate",
-       y = "Graduation Rate") +
+  labs(x = "Poverty Rate", y = "Graduation Rate") +
   theme_bw()
 
 set.seed(50)
 poverty_shuffled <- poverty
 poverty_shuffled$Graduates <- sample(poverty$Graduates)
 
-pB <- ggplot(poverty_shuffled, aes(x = Poverty, 
-                    y = Graduates)) +
+pB <- ggplot(poverty_shuffled, aes(x = Poverty, y = Graduates)) +
   geom_point() +
-  labs(x = "Poverty Rate",
-       y = "Graduation Rate") +
+  labs(x = "Poverty Rate", y = "Graduation Rate") +
   theme_bw()
 
 library(patchwork)
 pA + pB
 ```
+
 :::
 
 If you guessed the plot on the left, you are correct :tada:.
@@ -188,6 +191,7 @@ These density curves are conditional distributions because we've set a condition
 :::
 
 :::{.content-visible when-format="html"}
+
 ```{r}
 #| fig-height: 3
 #| fig-width: 7.5
@@ -199,26 +203,37 @@ These density curves are conditional distributions because we've set a condition
 poverty_2 <- poverty %>%
   filter(group != "med")
 
-p_real_densities <-  poverty_2 %>%
+p_real_densities <- poverty_2 %>%
   ggplot(aes(y = Graduates, fill = group)) +
   geom_density(alpha = .5) +
-  theme_void() + 
+  theme_void() +
   theme(legend.position = "none") +
   lims(y = c(77, 92.5))
 
 p_real_scatter <- poverty %>%
-  ggplot(aes(x = Poverty, 
-             y = Graduates)) +
-  annotate("rect", xmin = 5, xmax = 9,
-           ymin = 77, ymax = 92.5, alpha = .35,
-           color = "#00BFC4", fill = NA) +
-  annotate("rect", xmin = 13, xmax = 18,
-           ymin = 77, ymax = 92.5, alpha = .35,
-           color = "#F8766D", fill = NA) +
+  ggplot(aes(x = Poverty, y = Graduates)) +
+  annotate(
+    "rect",
+    xmin = 5,
+    xmax = 9,
+    ymin = 77,
+    ymax = 92.5,
+    alpha = .35,
+    color = "#00BFC4",
+    fill = NA
+  ) +
+  annotate(
+    "rect",
+    xmin = 13,
+    xmax = 18,
+    ymin = 77,
+    ymax = 92.5,
+    alpha = .35,
+    color = "#F8766D",
+    fill = NA
+  ) +
   geom_point() +
-  geom_rug(data = poverty_2,
-           aes(color = group), 
-           alpha = .8, sides = "r") +
+  geom_rug(data = poverty_2, aes(color = group), alpha = .8, sides = "r") +
   theme_bw() +
   theme(legend.position = "none")
 
@@ -226,36 +241,56 @@ p_real_scatter <- poverty %>%
 poverty_shuffled_2 <- poverty_shuffled %>%
   filter(group != "med")
 
-p_shuf_densities <-  poverty_shuffled_2 %>%
+p_shuf_densities <- poverty_shuffled_2 %>%
   ggplot(aes(y = Graduates, fill = group)) +
   geom_density(alpha = .5) +
-  theme_void() + 
+  theme_void() +
   theme(legend.position = "none") +
   lims(y = c(77, 92.5))
 
 p_shuf_scatter <- poverty_shuffled_2 %>%
-  ggplot(aes(x = Poverty, 
-             y = Graduates)) +
-  annotate("rect", xmin = 5, xmax = 9,
-           ymin = 77, ymax = 92.5, alpha = .35,
-           color = "#00BFC4", fill = NA) +
-  annotate("rect", xmin = 13, xmax = 18,
-           ymin = 77, ymax = 92.5, alpha = .35,
-           color = "#F8766D", fill = NA) +
+  ggplot(aes(x = Poverty, y = Graduates)) +
+  annotate(
+    "rect",
+    xmin = 5,
+    xmax = 9,
+    ymin = 77,
+    ymax = 92.5,
+    alpha = .35,
+    color = "#00BFC4",
+    fill = NA
+  ) +
+  annotate(
+    "rect",
+    xmin = 13,
+    xmax = 18,
+    ymin = 77,
+    ymax = 92.5,
+    alpha = .35,
+    color = "#F8766D",
+    fill = NA
+  ) +
   geom_point() +
-  geom_rug(data = poverty_shuffled_2,
-           aes(color = group), 
-           alpha = .8, sides = "r") +
+  geom_rug(
+    data = poverty_shuffled_2,
+    aes(color = group),
+    alpha = .8,
+    sides = "r"
+  ) +
   theme_bw() +
   theme(legend.position = "none")
 
-p_real_scatter + p_real_densities + 
-  p_shuf_scatter + p_shuf_densities + 
+p_real_scatter +
+  p_real_densities +
+  p_shuf_scatter +
+  p_shuf_densities +
   plot_layout(widths = c(4, 1, 4, 1))
 ```
+
 :::
 
 :::{.content-visible when-format="pdf"}
+
 ```{r}
 #| fig-height: 3
 #| fig-width: 7.5
@@ -267,26 +302,37 @@ p_real_scatter + p_real_densities +
 poverty_2 <- poverty %>%
   filter(group != "med")
 
-p_real_densities <-  poverty_2 %>%
+p_real_densities <- poverty_2 %>%
   ggplot(aes(y = Graduates, fill = group)) +
   geom_density(alpha = .5) +
-  theme_void() + 
+  theme_void() +
   theme(legend.position = "none") +
   lims(y = c(77, 92.5))
 
 p_real_scatter <- poverty %>%
-  ggplot(aes(x = Poverty, 
-             y = Graduates)) +
-  annotate("rect", xmin = 5, xmax = 9,
-           ymin = 77, ymax = 92.5, alpha = .35,
-           color = "#00BFC4", fill = NA) +
-  annotate("rect", xmin = 13, xmax = 18,
-           ymin = 77, ymax = 92.5, alpha = .35,
-           color = "#F8766D", fill = NA) +
+  ggplot(aes(x = Poverty, y = Graduates)) +
+  annotate(
+    "rect",
+    xmin = 5,
+    xmax = 9,
+    ymin = 77,
+    ymax = 92.5,
+    alpha = .35,
+    color = "#00BFC4",
+    fill = NA
+  ) +
+  annotate(
+    "rect",
+    xmin = 13,
+    xmax = 18,
+    ymin = 77,
+    ymax = 92.5,
+    alpha = .35,
+    color = "#F8766D",
+    fill = NA
+  ) +
   geom_point() +
-  geom_rug(data = poverty_2,
-           aes(color = group), 
-           alpha = .8, sides = "r") +
+  geom_rug(data = poverty_2, aes(color = group), alpha = .8, sides = "r") +
   theme_bw() +
   theme(legend.position = "none")
 
@@ -294,33 +340,52 @@ p_real_scatter <- poverty %>%
 poverty_shuffled_2 <- poverty_shuffled %>%
   filter(group != "med")
 
-p_shuf_densities <-  poverty_shuffled_2 %>%
+p_shuf_densities <- poverty_shuffled_2 %>%
   ggplot(aes(y = Graduates, fill = group)) +
   geom_density(alpha = .5) +
-  theme_void() + 
+  theme_void() +
   theme(legend.position = "none") +
   lims(y = c(77, 92.5))
 
 p_shuf_scatter <- poverty_shuffled_2 %>%
-  ggplot(aes(x = Poverty, 
-             y = Graduates)) +
-  annotate("rect", xmin = 5, xmax = 9,
-           ymin = 77, ymax = 92.5, alpha = .35,
-           color = "#00BFC4", fill = NA) +
-  annotate("rect", xmin = 13, xmax = 18,
-           ymin = 77, ymax = 92.5, alpha = .35,
-           color = "#F8766D", fill = NA) +
+  ggplot(aes(x = Poverty, y = Graduates)) +
+  annotate(
+    "rect",
+    xmin = 5,
+    xmax = 9,
+    ymin = 77,
+    ymax = 92.5,
+    alpha = .35,
+    color = "#00BFC4",
+    fill = NA
+  ) +
+  annotate(
+    "rect",
+    xmin = 13,
+    xmax = 18,
+    ymin = 77,
+    ymax = 92.5,
+    alpha = .35,
+    color = "#F8766D",
+    fill = NA
+  ) +
   geom_point() +
-  geom_rug(data = poverty_shuffled_2,
-           aes(color = group), 
-           alpha = .8, sides = "r") +
+  geom_rug(
+    data = poverty_shuffled_2,
+    aes(color = group),
+    alpha = .8,
+    sides = "r"
+  ) +
   theme_bw() +
   theme(legend.position = "none")
 
-p_real_scatter + p_real_densities + 
-  p_shuf_scatter + p_shuf_densities + 
+p_real_scatter +
+  p_real_densities +
+  p_shuf_scatter +
+  p_shuf_densities +
   plot_layout(widths = c(4, 1, 4, 1))
 ```
+
 :::
 
 The plot on the right, by contrast, exhibits no association between poverty rate and graduation rate. When we compare the low poverty states with the high poverty states, their conditional distributions of Graduation rate are essentially the same.
@@ -428,12 +493,10 @@ We can then add our model to our scatter plot. This can be done with the **`geom
 #| fig-align: center
 #| code-fold: false
 
-ggplot(poverty, aes(x = Poverty, 
-                    y = Graduates)) +
+ggplot(poverty, aes(x = Poverty, y = Graduates)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Poverty Rate",
-       y = "Graduation Rate") +
+  labs(x = "Poverty Rate", y = "Graduation Rate") +
   theme_bw()
 ```
 
@@ -501,31 +564,44 @@ The calculation of the residual can be seen in the plot below.
 #| echo: false
 library(ggrepel)
 poverty <- poverty %>%
-  mutate(is_ca = case_when(
-    State == "California" ~ "California (12.8, 81.1)", 
-    TRUE ~ ""))
+  mutate(
+    is_ca = case_when(
+      State == "California" ~ "California (12.8, 81.1)",
+      TRUE ~ ""
+    )
+  )
 ca_pred <- m1$fitted.values[poverty$State == "California"]
 poverty %>%
-  ggplot(aes(x = Poverty, 
-             y = Graduates)) +
-  annotate("segment", x = 12.8, xend = 12.8, 
-           y = 81.1, yend = ca_pred,
-           lty = 2, color = "tomato") +
-  annotate("segment", x = 5.2, xend = 12.8, 
-           y = ca_pred, yend = ca_pred,
-           lty = 2, color = "darkgray") +
+  ggplot(aes(x = Poverty, y = Graduates)) +
+  annotate(
+    "segment",
+    x = 12.8,
+    xend = 12.8,
+    y = 81.1,
+    yend = ca_pred,
+    lty = 2,
+    color = "tomato"
+  ) +
+  annotate(
+    "segment",
+    x = 5.2,
+    xend = 12.8,
+    y = ca_pred,
+    yend = ca_pred,
+    lty = 2,
+    color = "darkgray"
+  ) +
   geom_point() +
   geom_text_repel(aes(label = is_ca)) +
-  geom_abline(slope = coef(m1)[2],
-              intercept = coef(m1)[1],
-              color = "blue") +
-  labs(x = "Poverty Rate",
-       y = "Graduation Rate") +
+  geom_abline(slope = coef(m1)[2], intercept = coef(m1)[1], color = "blue") +
+  labs(x = "Poverty Rate", y = "Graduation Rate") +
   theme_bw()
 ```
+
 :::
 
 :::{.content-visible when-format="pdf"}
+
 ```{r}
 #| fig-width: 4
 #| fig-height: 4
@@ -534,28 +610,40 @@ poverty %>%
 #| code-fold: false
 library(ggrepel)
 poverty <- poverty %>%
-  mutate(is_ca = case_when(
-    State == "California" ~ "California (12.8, 81.1)", 
-    TRUE ~ ""))
+  mutate(
+    is_ca = case_when(
+      State == "California" ~ "California (12.8, 81.1)",
+      TRUE ~ ""
+    )
+  )
 ca_pred <- m1$fitted.values[poverty$State == "California"]
 poverty %>%
-  ggplot(aes(x = Poverty, 
-             y = Graduates)) +
-  annotate("segment", x = 12.8, xend = 12.8, 
-           y = 81.1, yend = ca_pred,
-           lty = 2, color = "tomato") +
-  annotate("segment", x = 5.2, xend = 12.8, 
-           y = ca_pred, yend = ca_pred,
-           lty = 2, color = "darkgray") +
+  ggplot(aes(x = Poverty, y = Graduates)) +
+  annotate(
+    "segment",
+    x = 12.8,
+    xend = 12.8,
+    y = 81.1,
+    yend = ca_pred,
+    lty = 2,
+    color = "tomato"
+  ) +
+  annotate(
+    "segment",
+    x = 5.2,
+    xend = 12.8,
+    y = ca_pred,
+    yend = ca_pred,
+    lty = 2,
+    color = "darkgray"
+  ) +
   geom_point() +
   geom_text_repel(aes(label = is_ca)) +
-  geom_abline(slope = coef(m1)[2],
-              intercept = coef(m1)[1],
-              color = "blue") +
-  labs(x = "Poverty Rate",
-       y = "Graduation Rate") +
+  geom_abline(slope = coef(m1)[2], intercept = coef(m1)[1], color = "blue") +
+  labs(x = "Poverty Rate", y = "Graduation Rate") +
   theme_bw()
 ```
+
 :::
 The horizontal dashed line represents $\hat{y} = 84.7$, the y-value of the least squares line when it passes through $x = 12.8$. The vertical red dashed line is the residual: the distance between the line and the observation in the y direction.
 
@@ -565,17 +653,24 @@ Residuals open up a new avenue for numerical statistics. While the slope and int
 If you have $n$ data points, you can calculate $n$ residuals. This is described below.
 :::
 
-While using R as a calculator directly to obtain *one* residual is somewhat efficient, this changes when you would like to calculate a residual for each point in your data set. Imagine having to write $n$ lines of code, one for each observation: $y_1$, $y_2$, and all the way to $y_n$! Luckily, when you save a linear model into an object, you store lots of useful information, including $\hat{y}_i$ and $\hat{e}_i$ for every observation $y_i$. These can be accessed via the `fitted()` and `residuals()` functions, respectively.
+While using R as a calculator directly to obtain *one* residual is somewhat efficient, this changes when you would like to calculate a residual for each point in your data set. Imagine having to write $n$ lines of code, one for each observation: $y_1$, $y_2$, and all the way to $y_n$! Luckily, when you save a linear model into an object, you store lots of useful information, including $\hat{y}_i$ and $\hat{e}_i$ for every observation $y_i$. These can be accessed via the `
+fitted()
+` and `
+residuals()
+` functions, respectively.
 
-`fitted()` and `residuals()` return vectors. To match the vectors up with the observations, we can *mutate* them as columns onto the original data frame. From here, we can isolate the residual for the state of California as before.
+`
+fitted()
+` and `
+residuals()
+` return vectors. To match the vectors up with the observations, we can *mutate* them as columns onto the original data frame. From here, we can isolate the residual for the state of California as before.
 
 ```{r}
 #| code-fold: false
 poverty |>
-  mutate(y_hat = fitted(m1),
-         e_hat = residuals(m1)) |>
+  mutate(y_hat = fitted(m1), e_hat = residuals(m1)) |>
   select(State, Graduates, Poverty, y_hat, e_hat) |>
-  filter(State == "California") 
+  filter(State == "California")
 
 ```
 

@@ -58,10 +58,12 @@ You might ask:
 > What is the relationship between the food quality and the price of a meal at Italian restaurant? Are these two variables positively correlated or is the best Italian meal in New York a simple and inexpensive slice of pizza?
 
 To answer these questions, we need more data. The data frame below contains Zagat reviews from 168 Italian restaurants in Manhattan.
+<!-- Sourced from: http://www.science.smith.edu/~bbaumer/mth247/labs/added_variables.html -->
 
 ```{r}
 library(tidyverse)
-zagat <- read_csv("https://www.dropbox.com/s/c797oanmvdzjegt/zagat.csv?dl=1")
+zagat <- read_csv("data/nyc-zagat.csv")
+
 zagat
 ```
 
@@ -76,14 +78,10 @@ Let's summarize the relationship between food quality, price, and one categorica
 #| fig-height: 3
 #| fig-align: center
 zagat %>%
-  ggplot(aes(x = food,
-             y = price,
-             color = geo)) +
+  ggplot(aes(x = food, y = price, color = geo)) +
   geom_jitter() +
   theme_bw() +
-  labs(x = "Food Quality",
-       y = "Price of Average Meal",
-       color = "Geography")
+  labs(x = "Food Quality", y = "Price of Average Meal", color = "Geography")
 ```
 
 It looks like if you want a very tasty meal, you'll have to pay for it. There is a moderately strong, positive, and linear relationship between food quality and price. This plot, however, has a third variable in it: geography. The restaurants from the east and west sides are fairly well mixed, but to my eye the points on the west side might be a tad bit lower on price than the points from the east side. I could numerically summarize the relationship between these three variables by hand-drawing two lines, one for each neighborhood.
@@ -165,14 +163,10 @@ zagat <- zagat |>
 # We use geom_line instead of geom_abline since the model
 # now has two slope coefficients
 p_parallel <- zagat %>%
-  ggplot(aes(x = food,
-             y = price,
-             color = geo)) +
+  ggplot(aes(x = food, y = price, color = geo)) +
   geom_jitter() +
   theme_bw() +
-  labs(x = "Food Quality",
-       y = "Price of Average Meal",
-       color = "Geography") +
+  labs(x = "Food Quality", y = "Price of Average Meal", color = "Geography") +
   geom_line(aes(y = y_hat))
 
 p_parallel
@@ -215,26 +209,20 @@ library(reshape2)
 
 m1 <- lm(price ~ food + decor, data = zagat)
 grid_points <- 30
-axis_x <- seq(min(zagat$food), 
-              max(zagat$food),
-              length.out = grid_points)
-axis_y <- seq(min(zagat$decor), 
-              max(zagat$decor),
-              length.out = grid_points)
-zagat_plane <- expand.grid(food = axis_x, 
-                         decor = axis_y, 
-                         KEEP.OUT.ATTRS = F)
+axis_x <- seq(min(zagat$food), max(zagat$food), length.out = grid_points)
+axis_y <- seq(min(zagat$decor), max(zagat$decor), length.out = grid_points)
+zagat_plane <- expand.grid(food = axis_x, decor = axis_y, KEEP.OUT.ATTRS = F)
 zagat_plane$price <- predict.lm(m1, newdata = zagat_plane)
 z <- acast(zagat_plane, food ~ decor, value.var = "price")
-p <- plot_ly(zagat, x = ~food, y = ~decor, z = ~price, showlegend=FALSE) %>%
-  add_markers(marker = list(size = 5,
-                            opacity = .6,
-                            color = "steelblue"),
-              name = ~restaurant) %>%
-  config(displayModeBar = FALSE) 
+p <- plot_ly(zagat, x = ~food, y = ~decor, z = ~price, showlegend = FALSE) %>%
+  add_markers(
+    marker = list(size = 5, opacity = .6, color = "steelblue"),
+    name = ~restaurant
+  ) %>%
+  config(displayModeBar = FALSE)
 p %>%
-    htmlwidgets::saveWidget(
-    "images/plotly-3d.html",
+  htmlwidgets::saveWidget(
+    "2-summarizing-data/07-multiple-linear-regression/images/plotly-3d.html",
     selfcontained = TRUE
   )
 ```
@@ -274,13 +262,16 @@ Indeed this linear model is describing a *plane*.
 #| echo: false
 #| eval: false
 p %>%
-  add_surface(x = axis_x,
-              y = axis_y,
-              z = z, showscale=FALSE,
-              colorscale = list(c(0, 1), c("tan", "tan")),
-              name = "Linear Model") %>%
-    htmlwidgets::saveWidget(
-    "images/plotly-3d-plane.html",
+  add_surface(
+    x = axis_x,
+    y = axis_y,
+    z = z,
+    showscale = FALSE,
+    colorscale = list(c(0, 1), c("tan", "tan")),
+    name = "Linear Model"
+  ) %>%
+  htmlwidgets::saveWidget(
+    "2-summarizing-data/07-multiple-linear-regression/images/plotly-3d-plane.html",
     selfcontained = TRUE
   )
 ```
@@ -337,9 +328,7 @@ It is also visible in the geometry of the model. When we're looking at restauran
 #| echo: false
 #| code-fold: false
 p_parallel +
-  geom_vline(xintercept = 18,
-             color = "darkgray",
-             lty = 2)
+  geom_vline(xintercept = 18, color = "darkgray", lty = 2)
 ```
 
 <!-- ## Simpson's Paradox -->

@@ -10,15 +10,9 @@ format: stat20handout-typst
 
 @. The function below is a valid probability density function. *Hint:* The area of a circle is $\pi r^2$ where $r$ is the radius of the circle.
 
-```{r}
-#| echo: false
-#| fig-height: 5
-#| fig-width: 5
-#| fig-align: left
-knitr::include_graphics("images/circle.png")
-```
+<!-- ![](images/circle.png){width=5, height=5, fig-align="left"} -->
 
-$\textcolor{white}{space space space}$ $\bigcirc$ True $\textcolor{white}{space space space}$ $\bigcirc$ False
+<!-- $\textcolor{white}{space space space}$ $\bigcirc$ True $\textcolor{white}{space space space}$ $\bigcirc$ False -->
 
 
 We are going to study what I would call a "pessimistic random walk". Say you are in a one-dimensional space, and you can do one of three things, randomly, at any given moment:

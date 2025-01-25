@@ -10,6 +10,7 @@ format:
 execute: 
   warning: false
   message: false
+  cache: true
 ---
 
 :::{.content-hidden unless-profile="staff-guide"}
@@ -42,7 +43,7 @@ Graphically, this can be done by drawing a vertical line from where the poverty 
 
 library(tidyverse)
 library(broom)
-poverty <- read_csv("poverty.csv")
+poverty <- read_csv("data/poverty.csv")
 
 p1 <- ggplot(poverty, aes(Poverty, Graduates)) + 
     xlim(0, 20) +
@@ -61,6 +62,7 @@ p1 +
   geom_vline(xintercept = 15, color = "steelblue", lty = 2) +
   geom_hline(yintercept = yhat, color = "steelblue", lty = 2)
 ```
+
 :::
 
 :::{.content-visible when-format="pdf"}
@@ -73,22 +75,21 @@ p1 +
 #| eval: true
 
 library(tidyverse)
-poverty <- read_csv("https://tinyurl.com/stat20poverty")
+poverty <- read_csv("data/poverty.csv")
 
-p1 <- ggplot(poverty, aes(Poverty, Graduates)) + 
-    xlim(0, 20) +
-    ylim(75, 96) +
-    geom_point() +
-    theme_bw()
+p1 <- ggplot(poverty, aes(Poverty, Graduates)) +
+  xlim(0, 20) +
+  ylim(75, 96) +
+  geom_point() +
+  theme_bw()
 
 m1 <- lm(Graduates ~ Poverty, data = poverty)
 
 povnew <- data.frame(Poverty = 15)
 yhat <- predict(m1, povnew)
 
-p1 + 
-  geom_abline(intercept = m1$coef[1], slope = m1$coef[2], 
-              col = "goldenrod") +
+p1 +
+  geom_abline(intercept = m1$coef[1], slope = m1$coef[2], col = "goldenrod") +
   geom_vline(xintercept = 15, color = "steelblue", lty = 2) +
   geom_hline(yintercept = yhat, color = "steelblue", lty = 2)
 ```
@@ -155,7 +156,7 @@ Let's return to the data set that that we studying when we first learned about m
 #| code-fold: false
 #| echo: false
 
-zagat <- read_csv("https://www.dropbox.com/s/c797oanmvdzjegt/zagat.csv?dl=1")
+zagat <- read_csv("data/nyc-zagat.csv")
 zagat
 ```
 

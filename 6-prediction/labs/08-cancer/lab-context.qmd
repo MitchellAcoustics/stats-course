@@ -10,15 +10,51 @@ In this lab you will train and evaluate a classification algorithm to determine 
 #| echo: false
 #| warning: false
 library(tidyverse)
-cells <- read_csv("https://www.dropbox.com/s/0rbzonyrzramdgl/cells.csv?dl=1") %>%
+cells <- read_csv(
+  "data/wdbc.data",
+  col_names = c(
+    "id",
+    "diagnosis",
+    "radius_mean",
+    "texture_mean",
+    "perimeter_mean",
+    "area_mean",
+    "smoothness_mean",
+    "compactness_mean",
+    "concavity_mean",
+    "concave_points_mean",
+    "symmetry_mean",
+    "fractal_dimension_mean",
+    "radius_se",
+    "texture_se",
+    "perimeter_se",
+    "area_se",
+    "smoothness_se",
+    "compactness_se",
+    "concavity_se",
+    "concave_points_se",
+    "symmetry_worst",
+    "fractal_dimension_worst",
+    "radius_worst",
+    "texture_worst",
+    "perimeter_worst",
+    "area_worst",
+    "smoothness_worst",
+    "compactness_worst",
+    "concavity_worst",
+    "concave_points_worst",
+    "symmetry_worst",
+    "fractal_dimension_worst"
+  )
+) |>
   mutate(diagnosis = factor(diagnosis, levels = c("B", "M")))
 
-
 set.seed(57)
-knitr::kable(cells |>
-                  slice_sample(n = 23, replace = FALSE) |>
-                  select(diagnosis, radius_mean,area_mean,
-                         radius_sd))
+knitr::kable(
+  cells |>
+    slice_sample(n = 23, replace = FALSE) |>
+    select(diagnosis, radius_mean, area_mean, radius_se)
+)
 ```
 
 

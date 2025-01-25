@@ -196,7 +196,7 @@ scheduled-docs:
       days:
         - topic: "Quiz 2"
           display-date: Mar 4
-        - topic: 'Sampling Distributions'
+        - topic: "Sampling Distributions"
           display-date: Mar 5
           date: 3/05/24
           docs:
@@ -267,7 +267,7 @@ scheduled-docs:
             - type: PS
               href: 4-generalization/06-wrong-by-design/ps.qmd
     - week: "Spring Break"
-      days: 
+      days:
         - topic: "No Class"
     - week: 10
       unit: Prediction
@@ -380,4 +380,3 @@ scheduled-docs:
       days:
         - topic: "Stat 20 Final"
           display-date: May 9
-  
